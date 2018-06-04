@@ -69,6 +69,23 @@ module.exports = function (app) {
 			res.json(err);
 		})
 		//end of the save post route
-	})
+	});
+
+	// allows a user to unsave an article
+	app.put("/unsave_article/:articleId", function(req, res){
+		db.Article.findByIdAndUpdate(
+			{_id: req.params.articleID},
+			{saved : false},
+		)
+		.then(function (postResults){
+			res.send("Article Saved")
+		})
+		.catch(function (err) {
+			res.json(err);
+		})
+		// end of put route for unsaving
+
+		
+	});
 
 }
