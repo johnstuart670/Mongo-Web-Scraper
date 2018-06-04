@@ -1,5 +1,5 @@
 var cheerio = require("cheerio");
-var db = require("../models/index.js");
+var db = require("../models/schemaIndex.js");
 var axios = require("axios");
 
 module.exports = function (app) {
@@ -56,36 +56,72 @@ module.exports = function (app) {
 	});
 
 	// when they hit the save article route
-	app.put("/save_article/:articleId", function(req, res){
+	app.put("/save_article/:articleId", function (req, res) {
 		// find the article and update the "saved" key to truthy 
 		db.Article.findByIdAndUpdate(
-			{_id: req.params.articleID},
-			{saved : true},
+			{ _id: req.params.articleID },
+			{ saved: true },
 		)
-		.then(function (postResults){
-			res.send("Article Saved")
-		})
-		.catch(function (err) {
-			res.json(err);
-		})
+			.then(function (postResults) {
+				res.send("Article Saved")
+			})
+			.catch(function (err) {
+				res.json(err);
+			})
 		//end of the save post route
 	});
 
 	// allows a user to unsave an article
-	app.put("/unsave_article/:articleId", function(req, res){
+	app.put("/unsave_article/:articleId", function (req, res) {
 		db.Article.findByIdAndUpdate(
-			{_id: req.params.articleID},
-			{saved : false},
+			{ _id: req.params.articleID },
+			{ saved: false },
 		)
-		.then(function (postResults){
-			res.send("Article Saved")
-		})
-		.catch(function (err) {
-			res.json(err);
-		})
+			.then(function (postResults) {
+				res.send("Article Saved")
+			})
+			.catch(function (err) {
+				res.json(err);
+			})
 		// end of put route for unsaving
-
-		
 	});
 
-}
+	// post route for more articles 
+	app.post("/scrape_articles", function (req, res) {
+		// get all the articles that we have already put into the database:
+		db.Article.find({}, function (err, archive) {
+			// tap into the NYTimes information
+			axios.get("https://www.nytimes.com/").then(function (response) {
+				// use cheerio:
+				let $ = cheerio.load(response.data);
+
+				$("article.story").has("h2").each(function (i, element) {
+
+					let result = {};
+					result.title = $(element).children("h2").children("a").text();
+					result.link = $(element).children("h2").children("a").attr("href");
+					result.summary = $(element).children("p.summary").text();
+					let duplicate = false;
+
+					for (let i = 0; i < archive.length; i++) {
+						if (archive[i].title === result.title) {
+							duplicate = true;
+							break;
+						}
+					}
+
+					// Create article only if not a duplicate and all three have values
+					if (!duplicate && result.title && result.link && result.summary) {
+						db.Article.create(result);					}
+					res.redirect("/");
+				})
+					.catch(function (error) {
+						res.send(error)
+						console.log("error", errors)
+					})
+			})
+		})
+		// end of the scrape_articles route
+	});
+
+};

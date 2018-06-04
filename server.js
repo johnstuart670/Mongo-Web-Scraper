@@ -4,9 +4,6 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-// Require all database models
-var db = require("./models");
-
 // Set port to listen on
 var PORT = process.env.PORT || 8080;
 // Initialize Express
