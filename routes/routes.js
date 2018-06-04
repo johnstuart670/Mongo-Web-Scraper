@@ -1,6 +1,6 @@
 var cheerio = require("cheerio");
 var db = require("../models/schemaIndex.js");
-var axios = require("axios");
+var request = require("request");
 
 module.exports = function (app) {
 
@@ -26,6 +26,26 @@ module.exports = function (app) {
 		// end of the "/" route
 	});
 
+	app.get("/saved_articles", function (req, res) {
+		// we will go and get all the articles  in the database that have been saved
+		db.Article.find({
+			saved: true
+		})
+			// once we receive the response
+			.then(function (result) {
+				// make a json object with the results so we can use the Handlebars templates
+				let hbsObj = {
+					articles: result
+				};
+				// push it to the page
+				res.render("saved_articles", hbsObj)
+					// error handling
+					.catch(function (err) {
+						res.json(err);
+					});
+			})
+		// end of the "/" route
+	});
 	// post route that will allow for the user to post comments to a specific article
 	app.post("/comment/:articleID", function (req, res) {
 		// first create the comment using the mongoose model and taking in the json object that we will send with the post
@@ -91,7 +111,8 @@ module.exports = function (app) {
 		// get all the articles that we have already put into the database:
 		db.Article.find({}, function (err, archive) {
 			// tap into the NYTimes information
-			axios.get("https://www.nytimes.com/").then(function (response) {
+			request.get("https://www.nytimes.com/")
+			.on("response", function (response) {
 				// use cheerio:
 				let $ = cheerio.load(response.data);
 
@@ -113,7 +134,8 @@ module.exports = function (app) {
 					// Create article only if not a duplicate and all three have values
 					if (!duplicate && result.title && result.link && result.summary) {
 						db.Article.create(result);					}
-					res.redirect("/");
+						console.log("hey so this worked")
+					res.send("Hey so you did all the things");
 				})
 					.catch(function (error) {
 						res.send(error)
