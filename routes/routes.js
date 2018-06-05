@@ -1,6 +1,6 @@
 var cheerio = require("cheerio");
 var db = require("../models/schemaIndex.js");
-var axios = require("axios");
+var request = require("request");
 
 module.exports = function (app) {
 
@@ -112,12 +112,12 @@ module.exports = function (app) {
 			// tap into the NYTimes information
 			console.log("does the api search");
 
-			axios.get("https:/www.nytimes.com").then(function (webScrape) {
+			request("https://www.nytimes.com", function (error, response, webScrape){
 				console.log("gets down to the data");
-				let $ = cheerio.load(webScrape.data);
+				let $ = cheerio.load(webScrape);
 				let counter = 0;
 				$("article.story").has("h2").each(function (i, element) {
-
+		
 					let result = {};
 					result.title = $(element).children("h2").children("a").text();
 					result.link = $(element).children("h2").children("a").attr("href");
@@ -143,7 +143,7 @@ module.exports = function (app) {
 				});
 			});
 		});
-	// end of the scrape_articles route
-});
+		// end of the scrape_articles route
+	});
 
 };
