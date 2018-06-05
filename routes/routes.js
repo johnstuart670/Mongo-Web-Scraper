@@ -16,11 +16,10 @@ module.exports = function (app) {
 				};
 				// push it to the page
 				res.render("homepage", hbsObj)
-					// error handling
-					.catch(function (err) {
-						res.json(err);
-					});
-			})
+				// error handling
+			}).catch(function (err) {
+				res.json(err);
+			});
 		// end of the "/" route
 	});
 
@@ -38,10 +37,11 @@ module.exports = function (app) {
 				// push it to the page
 				res.render("saved_articles", hbsObj)
 					// error handling
-					.catch(function (err) {
-						res.json(err);
-					});
+				
 			})
+			.catch(function (err) {
+				res.json(err);
+			});
 		// end of the "/" route
 	});
 	// post route that will allow for the user to post comments to a specific article
@@ -109,15 +109,21 @@ module.exports = function (app) {
 		console.log("Hits the server")
 		// get all the articles that we have already put into the database:
 		db.Article.find({}, function (err, archive) {
+			if (err){
+				return console.log("Err: ", err);
+			}
 			// tap into the NYTimes information
 			console.log("does the api search");
 
-			request("https://www.nytimes.com", function (error, response, webScrape){
+			request("https://www.nytimes.com", function (error, response, webScrape) {
+				if (error){
+					return console.log("error:", error);
+				}
 				console.log("gets down to the data");
 				let $ = cheerio.load(webScrape);
 				let counter = 0;
 				$("article.story").has("h2").each(function (i, element) {
-		
+
 					let result = {};
 					result.title = $(element).children("h2").children("a").text();
 					result.link = $(element).children("h2").children("a").attr("href");
@@ -136,11 +142,14 @@ module.exports = function (app) {
 					if (!duplicate && result.title && result.link && result.summary) {
 						db.Article.create(result);
 					}
-					console.log("hey so this worked")
-					res.json({
-						count: counter
-					});
+					
 				});
+			});
+		})
+		.then(function(finalResults){
+			console.log("hey so this worked")
+			res.json({
+				count: counter
 			});
 		});
 		// end of the scrape_articles route

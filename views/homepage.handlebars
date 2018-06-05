@@ -8,13 +8,8 @@
 				</h3>
 				<div class="card-body elegant-color white-text">
 					<p class="card-text">{{this.sumary}}</p>
-					{{#if saved}}
 					<button class="btn deep-purple btn-block col-6" data-id={ {this.id}}>SAVE ARTICLE FOR LATER
 					</button>
-					{{/if}} {{#if !saved}}
-					<button class="btn indigo btn-block col-6" data-id="{{this.id}}">UNSAVE ARTICLE
-					</button>
-					{{/if}}
 					<button class="btn amber btn-block col-6">GO TO ALL SAVED ARTICLES
 					</button>
 				</div>

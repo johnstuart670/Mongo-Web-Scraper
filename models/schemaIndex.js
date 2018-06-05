@@ -3,5 +3,5 @@
 
 module.exports = {
   Article: require("./Article.js"),
-  Note: require("./Comments.js")
+  Comments: require("./Comments.js")
 };
