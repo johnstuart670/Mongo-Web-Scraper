@@ -1,15 +1,13 @@
 var cheerio = require("cheerio");
 var db = require("../models/schemaIndex.js");
-var request = require("request");
+var axios = require("axios");
 
 module.exports = function (app) {
 
 	// at the base menu
 	app.get("/", function (req, res) {
 		// we will go and get all the articles  in the database that haven't been saved
-		db.Article.find({
-			saved: false
-		})
+		db.Article.find({})
 			// once we receive the response
 			.then(function (result) {
 				// make a json object with the results so we can use the Handlebars templates
@@ -107,15 +105,17 @@ module.exports = function (app) {
 	});
 
 	// post route for more articles 
-	app.post("/scrape_articles", function (req, res) {
+	app.get("/scrape_articles", function (req, res) {
+		console.log("Hits the server")
 		// get all the articles that we have already put into the database:
 		db.Article.find({}, function (err, archive) {
 			// tap into the NYTimes information
-			request.get("https://www.nytimes.com/")
-			.on("response", function (response) {
-				// use cheerio:
-				let $ = cheerio.load(response.data);
+			console.log("does the api search");
 
+			axios.get("https:/www.nytimes.com").then(function (webScrape) {
+				console.log("gets down to the data");
+				let $ = cheerio.load(webScrape.data);
+				let counter = 0;
 				$("article.story").has("h2").each(function (i, element) {
 
 					let result = {};
@@ -127,23 +127,23 @@ module.exports = function (app) {
 					for (let i = 0; i < archive.length; i++) {
 						if (archive[i].title === result.title) {
 							duplicate = true;
+							console.log("1 article was added")
 							break;
 						}
 					}
 
 					// Create article only if not a duplicate and all three have values
 					if (!duplicate && result.title && result.link && result.summary) {
-						db.Article.create(result);					}
-						console.log("hey so this worked")
-					res.send("Hey so you did all the things");
-				})
-					.catch(function (error) {
-						res.send(error)
-						console.log("error", errors)
-					})
-			})
-		})
-		// end of the scrape_articles route
-	});
+						db.Article.create(result);
+					}
+					console.log("hey so this worked")
+					res.json({
+						count: counter
+					});
+				});
+			});
+		});
+	// end of the scrape_articles route
+});
 
 };

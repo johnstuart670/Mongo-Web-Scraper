@@ -1,0 +1,25 @@
+<div class="container-fluid px-4">
+	<div class="col" id="unsavedArticles">
+		{{#each articles}}
+		<div id="this.id">
+			<div class="card py-2">
+				<h3 class="card-header elegant-color white-text">
+					{{this.title}}
+				</h3>
+				<div class="card-body elegant-color white-text">
+					<p class="card-text">{{this.sumary}}</p>
+					{{#if saved}}
+					<button class="btn deep-purple btn-block col-6" data-id={ {this.id}}>SAVE ARTICLE FOR LATER
+					</button>
+					{{/if}} {{#if !saved}}
+					<button class="btn indigo btn-block col-6" data-id="{{this.id}}">UNSAVE ARTICLE
+					</button>
+					{{/if}}
+					<button class="btn amber btn-block col-6">GO TO ALL SAVED ARTICLES
+					</button>
+				</div>
+			</div>
+		</div>
+		{{/each}}
+	</div>
+</div>
