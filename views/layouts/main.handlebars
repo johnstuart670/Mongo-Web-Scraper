@@ -1,22 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
-<meta http-equiv="Content-Security-Policy" content="img-src 'https://www.nytimes.com' data:; default-src 'https://www.nytimes.com' localhost:8080/">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+
+
 
 	<title>Mongo Web Scraper</title>
 </head>
-<body>
-	<p>so here is a thing to test the page</p>
 
-	<button id = "articleScraper"></button>
+<body>
+	<div class="container-fluid">
+		<div class="card testimonial-card">
+
+			<!--Background color-->
+			<div class="card-up grey darken-2">
+			</div>
+
+			<!--Avatar-->
+			<div class="avatar mx-auto white">
+				<img src="" alt="avatar mx-auto white" class="rounded-circle img-fluid">
+			</div>
+
+			<div class="card-body mx-2 my-3 grey lighten-3">
+				<!--Name-->
+				<h1 class="card-title mx-1 text-center">NYT MONGO SCRAPER</h1>
+				<hr>
+				<!--Quotation-->
+				<p class="text-center">Full Stack App using Handlebars, MongoDB, Mongoose, Express, Node, and Bootstrap 4 (mdBootstrap extra)</p>
+				<button id="articleScraper" class="btn indigo btn-block">Scrape more articles!</button>
+
+			</div>
+		</div>
+
+	</div>
 	{{{ body }}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.1/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.1/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 </body>
+
 </html>
