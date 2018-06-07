@@ -41,15 +41,37 @@
 					<!--Quotation-->
 					<p class="text-center white">Full Stack App using Handlebars, MongoDB, Mongoose, Express, Node, and Bootstrap 4 (mdBootstrap extra)</p>
 					<button id="articleScraper" class="btn cyan darken-4 btn-block col-11 mx-auto">Scrape more articles!</button>
-					
-	{{{ body }}}
 
-	<div class="modal" id = "commentModal"></div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.1/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-	<script src="javascript/app.js"></script>
+					{{{ body }}} 
+					{{!-- Notes modal --}}
+					<div class="modal fade" id="notesModal" tabindex="-1" role="dialog" aria-labelledby="notesModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="notesModalLabel"></h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div id="displaynotes">
+										{{!-- Saved notes displayed here --}}
+									</div>
+									<div class="form-group shadow-textarea mt-4">
+										<textarea class="form-control z-depth-1" id="bodyinput" rows="3" placeholder="New Note"></textarea>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn cyan darken-3" id="savenote">SAVE NOTE</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.1/umd/popper.min.js"></script>
+					<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+					<script src="javascript/app.js"></script>
 </body>
 
 </html>

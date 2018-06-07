@@ -45,7 +45,7 @@ module.exports = function (app) {
 		// end of the "/" route
 	});
 	// post route that will allow for the user to post comments to a specific article
-	app.post("/comment/:articleID", function (req, res) {
+	app.post("/comments/:articleID", function (req, res) {
 		// first create the comment using the mongoose model and taking in the json object that we will send with the post
 		db.Comments.create(req.body)
 			// wait for the comment to post
@@ -73,12 +73,38 @@ module.exports = function (app) {
 		// end of the comment post route
 	});
 
+	app.get("/comments/:articleId", function(req, res){
+		db.Article.findOne({
+			_id: req.params.articleId
+		})
+		.populate("notes")
+		.then( function(article){
+			res.json(article)
+		})
+		.catch(function(err){
+			res.json("err")
+		})
+	});
+
+	// POST to delete a note
+  app.post("/commentDelete/:id", function (req, res) {
+    db.Comments.remove({
+        _id: req.params.id
+      })
+      .then(function (dbNote) {
+        res.json(dbNote);
+      })
+      .catch(function (err) {
+        res.json(err);
+      })
+  });
+
 	// when they hit the save article route
 	app.put("/save_article/:articleId", function (req, res) {
 		// find the article and update the "saved" key to truthy 
 		db.Article.findByIdAndUpdate(
-			{ _id: req.params.articleID },
-			{ saved: true },
+			{ _id: req.params.articleId },
+			{ saved: true }
 		)
 			.then(function (postResults) {
 				res.send("Article Saved")
@@ -92,8 +118,8 @@ module.exports = function (app) {
 	// allows a user to unsave an article
 	app.put("/unsave_article/:articleId", function (req, res) {
 		db.Article.findByIdAndUpdate(
-			{ _id: req.params.articleID },
-			{ saved: false },
+			{ _id: req.params.articleId },
+			{ saved: false }
 		)
 			.then(function (postResults) {
 				res.send("Article Saved")
