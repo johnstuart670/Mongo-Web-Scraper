@@ -2,7 +2,7 @@ $(document).ready(function () {
 	$("#articleScraper").on("click", function (event) {
 		event.preventDefault();
 		$.ajax({
-			method: "put",
+			method: "GET",
 			url: "/scrape_articles",
 		}).then(function (results) {
 			location.reload();
