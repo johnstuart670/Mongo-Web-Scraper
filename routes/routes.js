@@ -88,11 +88,11 @@ module.exports = function (app) {
 
 	// POST to delete a note
   app.post("/commentDelete/:id", function (req, res) {
-    db.Comments.remove({
+    db.Comments.findByIdAndRemove({
         _id: req.params.id
       })
       .then(function (dbNote) {
-        res.json(dbNote);
+				res.json(dbNote)
       })
       .catch(function (err) {
         res.json(err);

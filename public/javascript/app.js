@@ -60,10 +60,10 @@ $(document).ready(function () {
 	$("body").on("click", ".deleteNote", function () {
 		let noteId = $(this).attr("data-id");
 		let articleId = $(this).attr("data-article-id");
-		console.log(noteId, articleId)
+		let queryURL = "/commentDelete/" + noteId
 		$.ajax({
 			method: "POST",
-			url: "/commentDelete/" + noteId
+			url: queryURL
 		})
 			.then(function () {
 				updateNotesModal(articleId);
@@ -78,9 +78,7 @@ function updateNotesModal(articleId) {
 		method: "GET",
 		url: "/comments/" + articleId
 	}).then(function (data) {
-		console.log("data", data)
 		if(data){
-			console.log("there was data", data)
 		$("#notesModal").modal();
 		$("#notesModalLabel").text("Notes for Article: " + data._id);
 		$("#savenote").attr("data-id", data._id);
@@ -92,7 +90,7 @@ function updateNotesModal(articleId) {
 				let card = $("<div>").addClass("card bg-light mb-2");
 				let cardBody = $("<div>").addClass("card-body").text(data.notes[i].body);
 				// Build our delete button
-				let delButton = $("<button>").addClass("btn btn-danger btn-sm py-0 float-right");
+				let delButton = $("<button>").addClass("btn btn-danger btn-sm py-0 float-right deleteNote");
 				delButton.attr("data-id", data.notes[i]._id);
 				delButton.attr("data-article-id", data._id);
 				delButton.attr("id", "deleteNote")
