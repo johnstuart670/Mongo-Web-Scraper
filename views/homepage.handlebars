@@ -1,16 +1,26 @@
+<a class="btn blue btn-block col-11 mx-auto" href = "/saved_articles">GO TO ALL SAVED ARTICLES</a>
+
+				</div>
+			</div>
+		</div>
+	</div>
 <div class="container-fluid px-4">
 	<div class="col" id="unsavedArticles">
 		{{#each articles}}
-		<div id="this.id">
-			<div class="card py-2">
-				<h3 class="card-header elegant-color white-text">
+		<div id="{{this.id}}">
+			<div class="card py-2 my-3 altBG">
+				<h3 class="card-header grey lighten-3 text-center col-11 mx-auto">
 					{{this.title}}
 				</h3>
-				<div class="card-body elegant-color white-text">
-					<p class="card-text">{{this.sumary}}</p>
-					<button class="btn deep-purple btn-block col-6" data-id={ {this.id}}>SAVE ARTICLE FOR LATER
-					</button>
-					<button class="btn amber btn-block col-6">GO TO ALL SAVED ARTICLES
+				<div class="card-body mx-2 mt-1">
+					<p class="py-2 text-center white">{{this.summary}}</p>
+					<div class="row mx-auto my-0 col-11">
+							<button class="btn amber accent btn-block col-3 mx-auto" data-id="{{this.id}}"data-toggle="modal" data-target="#commentModal">VIEW ALL COMMENTS
+						</button>
+						<button class="btn orange darken-4 btn-block col-4 mx-auto SAVE" data-id="{{this.id}}">SAVE ARTICLE FOR LATER
+						</button>
+						<a class="btn blue btn-block col-3 mx-auto" href = "/saved_articles">GO TO ALL SAVED ARTICLES</a>
+					</div>
 					</button>
 				</div>
 			</div>

@@ -12,7 +12,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Material Design Bootstrap -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
-<link rel="stylesheet" href="/css/id_css.css">
+	<link rel="stylesheet" href="/css/id_css.css">
 
 
 
@@ -21,35 +21,35 @@
 
 <body>
 	<div class="container-fluid">
-		<div class="card testimonial-card"id = "c4d">
+		<div class="col">
+			<div class="card testimonial-card col-12" id="c4d">
 
-			<!--Background color-->
-			<div class="card-up" >
-			</div>
+				<!--Background color-->
+				<div class="card-up">
+				</div>
 
-			<!--Avatar-->
-			<div class="avatar mx-auto white">
-				<img src="images/wood-cube.jpg" alt="avatar mx-auto white" class="rounded-circle img-fluid">
-			</div>
+				<!--Avatar-->
+				<div class="avatar mx-auto white">
+					<img src="images/c4d_bg.png" alt="avatar mx-auto white" class="rounded-circle img-fluid stroke">
+				</div>
 
-			<div class="card-body mx-2 my-3 grey lighten-5">
-				<!--Name-->
-				<h1 class="card-title mx-1 text-center">NYT MONGO SCRAPER</h1>
-				<hr>
-				<!--Quotation-->
-				<p class="text-center">Full Stack App using Handlebars, MongoDB, Mongoose, Express, Node, and Bootstrap 4 (mdBootstrap extra)</p>
-				<button id="articleScraper" class="btn indigo btn-block">Scrape more articles!</button>
-
-			</div>
-		</div>
-
-	</div>
+				<div class="card-body mx-2 my-3">
+					<!--Name-->
+					<h1 class="card-title mx-1 text-center grey lighten-3">NYT MONGO SCRAPER</h1>
+					<h5 class="card-title mx-3 text-center white">By John Stuart</h5>
+					<hr>
+					<!--Quotation-->
+					<p class="text-center white">Full Stack App using Handlebars, MongoDB, Mongoose, Express, Node, and Bootstrap 4 (mdBootstrap extra)</p>
+					<button id="articleScraper" class="btn cyan darken-4 btn-block col-11 mx-auto">Scrape more articles!</button>
+					
 	{{{ body }}}
+
+	<div class="modal" id = "commentModal"></div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.1/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-	<script src = "javascript/app.js"></script>
+	<script src="javascript/app.js"></script>
 </body>
 
 </html>
