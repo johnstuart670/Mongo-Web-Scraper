@@ -133,6 +133,7 @@ module.exports = function (app) {
 	// post route for more articles 
 	app.get("/scrape_articles", function (req, res) {
 		console.log("Hits the server")
+		let counter = 0;
 		// get all the articles that we have already put into the database:
 		db.Article.find({}, function (err, archive) {
 			if (err){
@@ -167,6 +168,7 @@ module.exports = function (app) {
 					// Create article only if not a duplicate and all three have values
 					if (!duplicate && result.title && result.link && result.summary) {
 						db.Article.create(result);
+						counter++;
 					}
 					
 				});
@@ -177,8 +179,12 @@ module.exports = function (app) {
 			res.json({
 				count: counter
 			});
-		});
+		})
+		.catch(function (err) {
+			res.json(err);
 		// end of the scrape_articles route
 	});
+
+})
 
 };
